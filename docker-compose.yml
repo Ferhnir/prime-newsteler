@@ -1,0 +1,24 @@
+services:
+  db:
+    image: postgres:18
+    volumes:
+      - postgres_data:/var/lib/postgresql/
+    environment:
+      - POSTGRES_DB=django_db
+      - POSTGRES_USER=django_user
+      - POSTGRES_PASSWORD=django_pass
+
+  web:
+    build: Docker/.
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgres://django_user:django_pass@db:5432/django_db
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
