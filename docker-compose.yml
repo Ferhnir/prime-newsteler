@@ -1,15 +1,19 @@
 services:
   db:
+    container_name: primenewsletter-db
     image: postgres:18
     volumes:
       - postgres_data:/var/lib/postgresql/
+    ports:
+      - "6666:5432"
     environment:
       - POSTGRES_DB=django_db
       - POSTGRES_USER=django_user
       - POSTGRES_PASSWORD=django_pass
 
   web:
-    build: Docker/.
+    container_name: primenewsletter-web
+    build: ./Docker
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app

@@ -31,13 +31,24 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # CORE
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # MODULES
+    'modules.news',
+    'modules.users',
+
+    # 3RD PARTY
+    'tailwind',
+    'theme',
 ]
+
+TAILWIND_APP_NAME="theme"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -74,8 +85,12 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'django_db',
+        'USER': 'django_user',
+        'PASSWORD': 'django_pass',
+        'HOST': 'db',       # Matches the service name in docker-compose.yml
+        'PORT': '5432',     # Default Postgres port
     }
 }
 
